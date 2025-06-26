@@ -18,7 +18,7 @@ This project lets users play chess in their browser, featuring move validation, 
 ## Demo Video
 
 Watch a demonstration of the chessgame project here:  
-[![Demo Video]()
+[![Demo Video](https://github.com/DCchoudhury15/chessgame/blob/master/public/26_6_2025%2C%204_49_07%20pm%20-%20Screen%20-%20Untitled%20video.webm)
 
 > Replace YOUR_VIDEO_ID with your actual YouTube video ID.
 
