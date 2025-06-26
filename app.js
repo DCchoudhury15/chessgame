@@ -1,61 +1,64 @@
 const express = require('express');
-const socket = require('socket.io');
-const http = require('http');
+const http = require('http');  
+const { Server } = require('socket.io');
 const { Chess } = require("chess.js");
 const path = require('path');
-const { title } = require('process');
-
 const app = express();
 const server = http.createServer(app);
-const io = socket(server);
+const io = new Server(server);
 
 const chess = new Chess();
-
 let players = {};
 let currentplayer = "w";
 
 app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public")));
+// ✅ FIX: Serve both directories
+app.use(express.static(path.join(__dirname, "public")));        // For CSS
+app.use(express.static(path.join(__dirname, "views/public")));  // For JS
 
 app.get("/", (req, res) => {
     res.render("index", { title: "Chess Game" });
 });
 
-io.on("connection", function (uniquesocket) {
+io.on("connection", function (socket) {
     console.log("connection");
     if (!players.white) {
-        players.white = uniquesocket.id;
-        uniquesocket.emit("playerRole", "w");
+        players.white = socket.id;
+        socket.emit("playerRole", "w");
     } else if (!players.black) {
-        players.black = uniquesocket.id;
-        uniquesocket.emit("playerRole", "b");
+        players.black = socket.id;
+        socket.emit("playerRole", "b");
     } else {
-        uniquesocket.emit("spectatorRole");
+        socket.emit("spectatorRole");
     }
 
-    uniquesocket.on("disconnect", function () {
-        if (uniquesocket.id === players.white) {
+    socket.on("disconnect", function () {
+        // ✅ FIX: Change uniquesocket to socket
+        if (socket.id === players.white) {
             delete players.white;
-        } else if (uniquesocket.id === players.black) {
+        } else if (socket.id === players.black) {
             delete players.black;
         }
     });
 
-    uniquesocket.on("move", (move) => {
+    socket.on("move", (move) => {
         try {
-            if (chess.turn() === 'w' && uniquesocket.id !== players.white) return;
-            if (chess.turn() === 'b' && uniquesocket.id !== players.black) return;
+            // ✅ FIX: Change uniquesocket to socket
+            if (chess.turn() === 'w' && socket.id !== players.white) return;
+            if (chess.turn() === 'b' && socket.id !== players.black) return;
             const result = chess.move(move);
             if (result) {
                 io.emit("move", move);
                 io.emit("boardState", chess.fen());
             } else {
                 console.log("invalid move:", move);
-                uniquesocket.emit("invalid move", move);
+                // ✅ FIX: Change uniquesocket to socket + consistent event name
+                socket.emit("invalid move", move);
             }
         } catch (err) {
             console.log(err);
-            uniquesocket.emit("Invalid move", move);
+            // ✅ FIX: Change uniquesocket to socket + consistent event name
+            socket.emit("invalid move", move);
         }
     });
 });
