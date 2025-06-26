@@ -54,20 +54,5 @@ Here’s what the game looks like in action:
 - Start a new game, choose your mode, and enjoy playing chess!
 - [Add more usage instructions or options as needed]
 
-## Contributing
 
-Contributions are welcome!  
-1. Fork the repository  
-2. Create a new branch  
-3. Commit your changes  
-4. Open a pull request
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to update this README with more details, screenshots, or links as your project evolves!
