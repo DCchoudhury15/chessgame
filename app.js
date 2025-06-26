@@ -1,12 +1,15 @@
 const express = require('express');
+const http = require('http');  
 const { Server } = require('socket.io');
 
-const http = require('http');
+
 const { Chess } = require("chess.js");
 const path = require('path');
 const { title } = require('process');
 
+
 const app = express();
+const server = http.createServer(app);
 const io = new Server(server);
 
 
@@ -25,16 +28,16 @@ io.on("connection", function (socket)
 {
     console.log("connection");
     if (!players.white) {
-        players.white = uniquesocket.id;
-        uniquesocket.emit("playerRole", "w");
+        players.white = socket.id;
+        socket.emit("playerRole", "w");
     } else if (!players.black) {
-        players.black = uniquesocket.id;
-        uniquesocket.emit("playerRole", "b");
+        players.black = socket.id;
+        socket.emit("playerRole", "b");
     } else {
-        uniquesocket.emit("spectatorRole");
+        socket.emit("spectatorRole");
     }
 
-    uniquesocket.on("disconnect", function () {
+    socket.on("disconnect", function () {
         if (uniquesocket.id === players.white) {
             delete players.white;
         } else if (uniquesocket.id === players.black) {
@@ -42,7 +45,7 @@ io.on("connection", function (socket)
         }
     });
 
-    uniquesocket.on("move", (move) => {
+    socket.on("move", (move) => {
         try {
             if (chess.turn() === 'w' && uniquesocket.id !== players.white) return;
             if (chess.turn() === 'b' && uniquesocket.id !== players.black) return;
