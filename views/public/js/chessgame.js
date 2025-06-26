@@ -95,7 +95,7 @@ socket.on("playerRole", function (role) {
     renderBoard();
 });
 
-socket.on("SpectatorRole", function () {
+socket.on("spectatorRole", function () {
     playerRole = null;
     renderBoard();
 });
@@ -110,7 +110,7 @@ socket.on("move", function (move) {
     renderBoard();
 });
 
-socket.on("invalidMove", function (move) {
+socket.on("invalid move", function (move) {
     console.log("Invalid move attempted:", move);
 });
 
