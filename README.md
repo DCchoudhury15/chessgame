@@ -4,6 +4,14 @@
 A web-based chess game implemented in JavaScript, CSS, and EJS.  
 This project lets users play chess in their browser, featuring move validation, interactive UI, and support for player-vs-player or player-vs-computer modes.
 
+
+## Tech Stack
+
+- **Languages:** JavaScript, CSS, EJS
+- **Backend:** Node.js, Express (if applicable)
+- **Templating:** EJS
+- **Package Manager:** npm
+
 ## Features
 
 - Play against another player or the computer
