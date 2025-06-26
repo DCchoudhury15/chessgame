@@ -25,7 +25,7 @@ Watch a demonstration of the chessgame project here:
 ## Screenshot
 
 Here’s what the game looks like in action:  
-![Game Screenshot]()
+![Game Screenshot](https://github.com/DCchoudhury15/chessgame/blob/master/public/Screenshot%20(30).png)
 
 > Replace the URL above with your actual screenshot image URL.
 
